@@ -20,4 +20,25 @@ func main() {
 	const typedStr string = "Hi"
 
 	fmt.Println(myFavLanguage, sunRisesInTheEast, country, code, employeeId, salary, typedInt, typedStr)
+
+	const (
+		ColorRed      = iota
+		ColorOrange
+		ColorYellow
+	)
+
+	const (
+		Dog      = iota
+		Cat
+		Mouse
+	)
+
+	const (
+		Monday      = iota
+		Tuesday     = iota
+		Thursday = 4
+		Friday
+	)
+	fmt.Println(ColorYellow, Mouse) //2. 2
+	fmt.Println(Monday, Tuesday, Tuesday, Thursday, Friday) //0 1 1 4 4
 }

@@ -26,6 +26,10 @@ func main() {
 
 	// Short variable declaration syntax
 	name := "Rajeev Singh"
+	// 这行代码实际上做了三件事：
+	// - 声明一个新变量 name
+	// - 推断其类型为 string(根据右侧值)
+	// - 赋值 "Rajeev Singh" 给这个变量
 	age, salary, isProgrammer := 35, 50000.0, true
 
 	fmt.Println(name, age, salary, isProgrammer)
