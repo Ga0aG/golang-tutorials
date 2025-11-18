@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// 数组是具有相同 唯一类型 的一组已编号且**长度固定**的数据项序列（这是一种同构的数据结构）；
+
 func main() {
 	var x [5]int // An array of 5 integers
 	fmt.Println(x)
