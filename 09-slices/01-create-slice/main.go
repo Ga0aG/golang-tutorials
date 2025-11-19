@@ -5,6 +5,7 @@ import "fmt"
 // 切片是一个 长度可变的数组。
 
 func main() {
+	// var identifier []type
 	// Creating a slice using a slice literal
 	var s = []int{3, 5, 7, 9, 11, 13, 17} // Creates an array, and returns a slice reference to the array
 

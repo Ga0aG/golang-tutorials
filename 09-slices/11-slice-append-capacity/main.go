@@ -4,9 +4,10 @@ import "fmt"
 
 func main() {
 	// Appending to a slice that has enough capacity to accommodate new elements
-	slice1 := make([]string, 3, 10)
+	slice1 := make([]string, 3, 5)
 	copy(slice1, []string{"C", "C++", "Java"})
 
+	// 当使用 append() 向切片添加元素且容量不足时，Go 会自动扩容。
 	slice2 := append(slice1, "Python", "Ruby", "Go")
 
 	fmt.Printf("slice1 = %v, len = %d, cap = %d\n", slice1, len(slice1), cap(slice1))
