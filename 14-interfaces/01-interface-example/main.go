@@ -9,6 +9,8 @@ import (
 type Shape interface {
 	Area() float64
 	Perimeter() float64
+	// Length() float64
+	// 如果Circle没有定义Length(), 在var s Shape = Circle{5.0}的时候就会报错(都没有调用Length)
 }
 
 // ==================================================================
