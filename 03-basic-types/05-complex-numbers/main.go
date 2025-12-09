@@ -29,5 +29,5 @@ func main() {
 	var res3 = a * b
 	var res4 = a / b
 
-	fmt.Println(res1, res2, res3, res4)
+	fmt.Println(res1, res2, res3, res4) // (5+9i) (1+1i) (-14+22i) (1.3-0.1i)
 }

@@ -3,10 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/callicoder/golang-tutorials/07-packages/numbers"
-	"github.com/callicoder/golang-tutorials/07-packages/strings"	
+	"github.com/callicoder/golang-tutorials/07-packages/strings"
 	"github.com/callicoder/golang-tutorials/07-packages/strings/greeting" // Importing a nested package
 	str "strings"	// Package Alias
 )
+
+/*
+import "包的路径或 URL 地址"
+*/
 
 func main() {
 	fmt.Println(numbers.IsPrime(19))

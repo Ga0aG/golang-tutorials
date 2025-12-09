@@ -21,6 +21,9 @@ func main() {
 
 	fmt.Println(myFavLanguage, sunRisesInTheEast, country, code, employeeId, salary, typedInt, typedStr)
 
+
+	// iota 是一个从 0 开始的整数常量生成器
+  // 在每个 const 块中重置为 0
 	const (
 		ColorRed      = iota
 		ColorOrange
@@ -34,11 +37,13 @@ func main() {
 	)
 
 	const (
-		Monday      = iota
-		Tuesday     = iota
+		Monday      = iota + 1
+		Tuesday
 		Thursday = 4
-		Friday
+		Happyday
+		Friday   = iota + 1
+		Saturday
 	)
 	fmt.Println(ColorYellow, Mouse) //2. 2
-	fmt.Println(Monday, Tuesday, Tuesday, Thursday, Friday) //0 1 1 4 4
+	fmt.Println(Monday, Tuesday, Thursday, Happyday, Friday, Saturday) // 1 2 4 4 5 6
 }
