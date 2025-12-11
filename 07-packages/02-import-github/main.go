@@ -12,6 +12,12 @@ import (
 import "包的路径或 URL 地址"
 */
 
+/*
+go mod init example.com/myapp
+go mod vendor
+go mode tidy
+*/
+
 func main() {
 	fmt.Println(numbers.IsPrime(19))
 
