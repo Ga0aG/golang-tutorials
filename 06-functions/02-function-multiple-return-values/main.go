@@ -5,6 +5,7 @@ import (
 	"math"
 )
 
+// 当多个连续参数类型相同时，可以只在最后一个参数声明类型
 func getStockPriceChange(prevPrice, currentPrice float64) (float64, float64) {
 	change := currentPrice - prevPrice
 	percentChange := (change / prevPrice) * 100
