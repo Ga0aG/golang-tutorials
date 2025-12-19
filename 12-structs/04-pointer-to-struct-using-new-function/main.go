@@ -16,4 +16,10 @@ func main() {
 	pEmp.Name = "Sachin"
 
 	fmt.Println(pEmp)
+
+	// &struct 是一种简写，底层仍然会调用 new()，这里值的顺序必须按照字段顺序来写。
+	pEmp2 := &Employee{100, "Sara"}
+	fmt.Println(pEmp2)
+
+	// Go 语言中，结构体和它所包含的数据在内存中是以连续块的形式存在的，即使结构体中嵌套有其他的结构体
 }
