@@ -13,7 +13,8 @@ func main() {
 
 	numElementsCopied := copy(dest, src)
 
-	fmt.Println("src = ", src)
-	fmt.Println("dest = ", dest)
+	src[0] = "Anna"
+	fmt.Println("src = ", src, "capacity = ", cap(src))
+	fmt.Println("dest = ", dest, "capacity = ", cap(dest))
 	fmt.Println("Number of elements copied from src to dest = ", numElementsCopied)
 }
