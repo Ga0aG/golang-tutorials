@@ -2,6 +2,7 @@ package main
 import "fmt"
 
 func main() {
+	// ===== Switch Statement =====
 	var dayOfWeek = 6
 	switch dayOfWeek {
 		case 1: fmt.Println("Monday")
@@ -18,5 +19,28 @@ func main() {
 			fmt.Println("Weekend. Yaay!")
 		}
 		default: fmt.Println("Invalid day")
+	}
+
+	// ===== Switch with Combined Cases =====
+	switch dayOfWeek := 5; dayOfWeek {
+		case 1, 2, 3, 4, 5:
+			fmt.Println("Weekday")
+		case 6, 7:
+			fmt.Println("Weekend")
+		default:
+			fmt.Println("Invalid Day")
+	}
+
+	// ===== Switch with No Expression (like if-else) =====
+	var BMI = 21.0
+	switch {
+		case BMI < 18.5:
+			fmt.Println("You're underweight")
+		case BMI >= 18.5 && BMI < 25.0:
+			fmt.Println("Your weight is normal")
+		case BMI >= 25.0 && BMI < 30.0:
+			fmt.Println("You're overweight")
+		default:
+			fmt.Println("You're obese")
 	}
 }
