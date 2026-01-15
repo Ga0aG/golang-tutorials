@@ -201,7 +201,7 @@
         <div id="message" class="message"></div>
 
         <div>
-            <h3 style="color: #333; margin-bottom: 15px;">添加新用户</h3>
+            <h3 style="color: #333; margin-bottom: 15px;" id="formTitle">添加新用户</h3>
             <form id="userForm">
                 <div class="form-group">
                     <label>姓名</label>
@@ -216,8 +216,8 @@
                     <input type="tel" id="phone" name="phone">
                 </div>
                 <div class="button-group">
-                    <button type="submit" class="btn-primary">添加用户</button>
-                    <button type="reset" class="btn-secondary">清空表单</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">添加用户</button>
+                    <button type="button" class="btn-secondary" onclick="resetForm()">清空表单</button>
                 </div>
             </form>
         </div>
@@ -230,6 +230,7 @@
 
     <script>
         const API_BASE = '/api/v1';
+        let currentEditId = null;
 
         // 加载用户列表
         function loadUsers() {
@@ -245,6 +246,7 @@
                                     <div class="user-email">${user.email}</div>
                                 </div>
                                 <div class="user-actions">
+                                    <button class="btn-delete" onclick="editUser(${user.id}, '${user.name}', '${user.email}', '${user.phone || ''}')">编辑</button>
                                     <button class="btn-delete" onclick="deleteUser(${user.id})">删除</button>
                                 </div>
                             </div>
@@ -259,7 +261,26 @@
                 });
         }
 
-        // 提交表单添加用户
+        // 编辑用户
+        function editUser(id, name, email, phone) {
+            currentEditId = id;
+            document.getElementById('name').value = name;
+            document.getElementById('email').value = email;
+            document.getElementById('phone').value = phone;
+            document.getElementById('formTitle').textContent = '编辑用户';
+            document.getElementById('submitBtn').textContent = '保存修改';
+            window.scrollTo(0, 0);
+        }
+
+        // 重置表单
+        function resetForm() {
+            document.getElementById('userForm').reset();
+            currentEditId = null;
+            document.getElementById('formTitle').textContent = '添加新用户';
+            document.getElementById('submitBtn').textContent = '添加用户';
+        }
+
+        // 提交表单添加或修改用户
         document.getElementById('userForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -269,8 +290,18 @@
                 phone: document.getElementById('phone').value,
             };
 
-            fetch(`${API_BASE}/users`, {
-                method: 'POST',
+            let url = `${API_BASE}/users`;
+            let method = 'POST';
+            let successMsg = '用户添加成功！';
+
+            if (currentEditId) {
+                url = `${API_BASE}/users/${currentEditId}`;
+                method = 'PUT';
+                successMsg = '用户更新成功！';
+            }
+
+            fetch(url, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -278,12 +309,12 @@
             })
             .then(res => res.json())
             .then(data => {
-                showMessage('用户添加成功！', 'success');
-                document.getElementById('userForm').reset();
+                showMessage(successMsg, 'success');
+                resetForm();
                 loadUsers();
             })
             .catch(err => {
-                showMessage('添加失败，请重试', 'error');
+                showMessage('操作失败，请重试', 'error');
                 console.error(err);
             });
         });

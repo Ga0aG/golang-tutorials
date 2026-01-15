@@ -52,6 +52,10 @@ func main() {
 }
 
 func registerRoutes(router *gin.Engine, userHandler *handler.UserHandler) {
+	// 提供静态文件
+	router.LoadHTMLGlob("web/template/*.html")
+	router.Static("/assets", "./web/assets")
+
 	// 健康检查
 	router.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -60,8 +64,13 @@ func registerRoutes(router *gin.Engine, userHandler *handler.UserHandler) {
 		})
 	})
 
-	// 根路径
+	// 根路径 - 返回前端页面
 	router.GET("/", func(c *gin.Context) {
+		c.HTML(200, "index.html", gin.H{})
+	})
+
+	// API 根路径信息
+	router.GET("/api", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "欢迎使用 Gin Web API",
 			"version": "1.0.0",

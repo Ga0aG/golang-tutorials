@@ -176,6 +176,79 @@ curl -X DELETE http://localhost:8080/api/v1/users/1
    - CORS 处理
    - 认证授权（可扩展）
 
+📊 Handler 层 vs Service 层
+
+  Handler 层（HTTP处理层） - internal/handler/user.go
+
+  func (h *UserHandler) CreateUser(c *gin.Context) {
+      // 1️⃣ 接收和解析HTTP请求
+      var req model.CreateUserRequest
+      if err := c.ShouldBindJSON(&req); err != nil {
+          c.JSON(http.StatusBadRequest, ...)
+          return
+      }
+
+      // 2️⃣ 调用Service层处理业务逻辑
+      user, err := h.service.CreateUser(&req)
+      if err != nil {
+          c.JSON(http.StatusInternalServerError, ...)
+          return
+      }
+
+      // 3️⃣ 返回HTTP响应
+      c.JSON(http.StatusCreated, model.Response{
+          Code:    0,
+          Message: "创建成功",
+          Data:    user,
+      })
+  }
+
+  职责：
+  - 📥 接收和解析 HTTP 请求
+  - ✅ 请求参数验证
+  - 📞 调用 Service 层
+  - 📤 返回 HTTP 响应（JSON、状态码等）
+  - 🔀 HTTP 协议相关的东西
+
+  ---
+  Service 层（业务逻辑层） - internal/service/user.go
+
+  func (s *UserService) CreateUser(req *model.CreateUserRequest) (*model.User, error) {
+      // 1️⃣ 构建业务对象
+      user := &model.User{
+          Name:      req.Name,
+          Email:     req.Email,
+          Phone:     req.Phone,
+          Status:    1,           // ⚙️ 业务规则：新用户默认启用
+          CreatedAt: time.Now(),  // ⚙️ 业务规则：设置创建时间
+          UpdatedAt: time.Now(),
+      }
+
+      // 2️⃣ 调用Repository层持久化数据
+      err := s.repo.Create(user)
+      if err != nil {
+          return nil, err
+      }
+
+      // 3️⃣ 返回业务对象
+      return user, nil
+  }
+
+  职责：
+  - 💼 核心业务逻辑
+  - ⚙️ 业务规则（如新用户默认启用）
+  - 🔗 编排多个操作（复杂业务需要多步）
+  - 📊 数据验证和转换
+  - 📚 调用 Repository 获取/存储数据
+
+  ---
+  🎯 为什么要分开？（6个重要原因）
+
+  1. 职责单一（单一职责原则）
+
+  Handler：只关心 HTTP 细节
+  Service：只关心业务逻辑
+
 ## 环境变量
 
 ```
